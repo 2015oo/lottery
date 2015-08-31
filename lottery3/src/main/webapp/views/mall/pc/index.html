@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>index</title>
+<script type="text/javascript"
+	src="${ctx}/statics/jquery/jquery-1.9.1.js"></script>
+<script type="text/javascript"
+	src="${ctx}/statics/jquery/jquery.form.js"></script>
+<script type="text/javascript"
+	src="${ctx}/statics/jquery/jquery.tmpl.js"></script>
+<script type="text/javascript"
+	src="${ctx}/statics/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet"
+	href="${ctx}/statics/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet"
+	href="${ctx}/statics/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
+</head>
+<script type="text/javascript">
+	
+</script>
+<body>
+	<div style="width: 800px; height: 600px;" class="container">
+		<div class="panel panel-default" >
+			<img alt="" style="width: 800px" height="auto" src="${ctx}/statics/image/cp-title.jpg">
+		</div>
+	
+		<div class="panel panel-default">
+			<div class="panel-heading">查询框</div>
+			<div class="panel-body">
+				
+				<form class="navbar-form navbar-left queryForm" role="search" action="${ctx}/pc/lottery/query" >
+				  <div class="form-group">
+					  <input type="text" class="form-control" name="cdCode" placeholder="传单号">
+				  </div>
+				  <div class="form-group">
+				    <input type="text" class="form-control" name="name"placeholder="姓名">
+				  </div>
+				  <div class="form-group">
+				    <input type="text" class="form-control" name="code" placeholder="身份证号">
+				  </div>
+				  <button type="submit" class="btn btn-default">
+				 	<span class="glyphicon glyphicon-search"></span> 查询
+				  </button>
+				  <br/>
+				  <br/>
+					&nbsp;&nbsp; <span class="btn btn-default" data-toggle="modal"
+						data-target="#myModal">添加彩上彩</span> &nbsp;&nbsp;
+					<span class="btn btn-default" data-toggle="modal"
+						data-target="#myModal2">添加满堂彩</span> &nbsp;&nbsp;
+					<span class="btn btn-default tjButton" data-toggle="modal"
+						data-target="#myModal3">统计</span> &nbsp;&nbsp;
+				</form>
+			</div>
+		</div>
+
+		<div class="panel panel-default listClass">
+			<div class="panel-heading">内容</div>
+			<table class="table">
+				<thead>
+				<tr>
+					<th>序号</th>
+					<th>名称</th>
+					<th>身份证号</th>
+					<th>参与时间</th>
+					<th>类型</th>
+					<th>传单号</th>
+					<th>操作</th>
+				</tr>
+				
+				</thead>
+				<tbody >
+				</tbody >
+			</table>
+			<script type="text/x-jquery-tmpl" id="tableTRTMPL">
+				<tr data-id=${id}>
+					<td>${id}</td>
+					<td>${name}</td>
+					<td>${code}</td>
+					<td>${createTime}</td>
+					<td>
+						{{if type=='1'}}
+						<font color="red">彩上彩</font>
+						{{else}}<font color="green">满堂彩</font>{{/if}}
+					</td>
+					<td>${cdCode}</td>
+					<td>
+						<button type="button" class="btn btn-default del">
+							<span class="glyphicon glyphicon-remove">删除</span>
+						</button>	
+						<button type="button" class="btn btn-default info">
+							<span class="glyphicon glyphicon-info-sign">详细</span>
+						</button>	
+					</td>
+				</tr>
+			</script>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">添加 彩上彩</h4>
+				</div>
+				<div class="modal-body">
+					<form action="${ctx}/pc/lottery/save">
+						<input type="hidden" value="1" name="type">
+						<div class="input-group">
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      		姓名
+						      </span>
+						      <input type="text" class="form-control" name="name" maxlength="30" aria-label="...">
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      	性别
+						      </span>
+						      <span class="form-control">
+						      <input type="radio" name="sex" checked="checked" value="0" id="sex0" aria-label="...">
+						      	<label for="sex0">男</label>
+						      <input type="radio" name="sex" value="1" id="sex1" aria-label="...">
+						      	<label for="sex1">女</label>
+						      </span>
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						</div>	
+						<br/>
+						<div class="input-group">
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      		身份证号码
+						      </span>
+						      <input type="text" class="form-control" name="code" aria-label="..." maxlength="30">
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      	传单编号
+						      </span>
+						      <input type="text" class="form-control" name="cdCode" aria-label="..." maxlength="30">
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						  </div>
+						<br/>
+						<div class="input-group">
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      		加奖金额
+						      </span>
+						      <input type="text" class="form-control" name="money" aria-label="..." maxlength="4">
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      	备注
+						      </span>
+						      <input type="text" class="form-control" name="bz" aria-label="...">
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						</div>		
+						
+						<input type="reset" style="display:none;" /> 
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary">提交更改</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
+	
+	<!-- Modal -->
+	<!-- 模态框（Modal）满堂彩 -->
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">添加 满堂彩</h4>
+				</div>
+				<div class="modal-body">
+					<form action="${ctx}/pc/lottery/save">
+						<input type="hidden" value="2" name="type">
+						<div class="input-group">
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      		姓名
+						      </span>
+						      <input type="text" class="form-control" name="name" aria-label="..." maxlength="30">
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      	性别
+						      </span>
+						      <span class="form-control">
+						      <input type="radio" name="sex" checked="checked" value="0" id="sex0" aria-label="...">
+						      	<label for="sex0">男</label>
+						      <input type="radio" name="sex" value="1" id="sex1" aria-label="...">
+						      	<label for="sex1">女</label>
+						      </span>
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						</div>	
+						<br/>
+						<div class="input-group">
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      		身份证号码
+						      </span>
+						      <input type="text" class="form-control" name="code" aria-label="..." maxlength="30">
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						  <div class="col-lg-6">
+						    <div class="input-group">
+<!-- 						      <span class="input-group-addon"> -->
+<!-- 						      	传单编号 -->
+<!-- 						      </span> -->
+<!-- 						      <input type="text" class="form-control" name="cdCode" aria-label="..."> -->
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						  </div>
+						<br/>
+						<div class="input-group">
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      		加奖金额
+						      </span>
+						      <input type="text" class="form-control" name="money" aria-label="..." maxlength="4">
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <span class="input-group-addon">
+						      	备注
+						      </span>
+						      <input type="text" class="form-control" name="bz" aria-label="..." >
+						    </div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						</div>		
+						
+						<input type="reset" style="display:none;" /> 
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary">提交更改</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
+	<!-- Modal -->
+	<!-- 模态框（Modal）统计 -->
+	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">统计</h4>
+				</div>
+				<div class="modal-body">
+					
+					<ul class="list-group">
+					  <li class="list-group-item list-group-item-success">
+						      		彩上彩统计：
+						      <span class="csctj">人数：118，金额：234.1</span>
+					  </li>
+					  <li class="list-group-item list-group-item-info">
+						      		满堂彩统计：
+						      <span class="mtctj">人数：118，金额：234.1</span>
+					  </li>
+					  <li class="list-group-item list-group-item-danger">
+						      		总统计：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						      <span class="ztj">人数：118，金额：234.1</span>
+					  </li>
+					</ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
+	
+	<script type="text/javascript">
+	 var reg = new RegExp("^[0-9]*$");  
+		function checkData(_form){
+			//姓名
+			var name = _form.find("input[name='name']").val();
+			if(name==''){
+				alert("姓名必填")
+				return false;
+			}
+			//身份证号
+			var code= _form.find("input[name='code']").val();
+			if(code==''){
+				alert("身份证号")
+				return false;
+			}
+			//嘉奖金额
+			var money= _form.find("input[name='money']").val();
+			if(money==''){
+				alert("加奖金额必填")
+				return false;
+			}
+			if(!reg.test(money)){  
+		        alert("加奖金额必须为数字!");
+		        return false;
+		    }  
+			return true;
+		}
+	
+		$(function(){
+				$(".modal form").submit(function(){  
+					var _form = $(this);
+					if(checkData(_form)==false){
+						return false;
+					}
+					var code = $(this).find("input[name='code']").val();
+					var cdCode = $(this).find("input[name='cdCode']").val();
+			            $(this).ajaxSubmit({  
+			                type:"post",  //提交方式  
+			                dataType:"json", //数据类型  
+			                url:"${ctx}/pc/lottery/save", //请求url  
+			                success:function(data){ //提交成功的回调函数  
+				                $(".queryForm").find("input[name='cdCode']").val("");
+				                $(".queryForm").find("input[name='code']").val("");
+			                	if(data && data.success){
+			                		//保存成功，让列表刷新
+			                		$(".queryForm").find("input[name='code']").val(code);
+			                		$(".queryForm").submit();
+			                		_form[0].reset();
+			                	}else{
+			                		if(data.msg=='2'){
+			                			alert("不在活动时间范围内")
+			                		}else if(data.msg=='3'){
+				                		$(".queryForm").find("input[name='cdCode']").val(cdCode);
+				                		$(".queryForm").submit();
+			                			alert("该传单号已经使用");
+			                		}else if(data.msg=='4'){
+			                			alert("该身份证号码已经用过三次了");
+				                		$(".queryForm").find("input[name='code']").val(code);
+				                		$(".queryForm").submit();
+			                		}else if(data.msg=='5'){
+			                			alert("该身份证号码当天只可以用一次");
+				                		$(".queryForm").find("input[name='code']").val(code);
+				                		$(".queryForm").submit();
+			                		}
+			                	}
+		                		_form.parent().parent().find(".close").trigger("click");
+			                }  
+			            });  
+			            return false; //不刷新页面  
+			        });  
+			//彩上彩保存
+			$("#myModal").find(".btn-primary").click(function(){
+				$("#myModal form").submit();
+			});
+			$("#myModal2").find(".btn-primary").click(function(){
+				$("#myModal2 form").submit();
+			});
+			
+			//查询
+			$(".queryForm").submit(function(){
+				$(this).ajaxSubmit({
+					type:"post",
+					dataType:"json"
+					,url:"${ctx}/pc/lottery/query"
+					,success:function(d){
+						var table = $(".listClass").find("table tbody");
+						table.empty();
+						$("#tableTRTMPL").tmpl(d).appendTo(table);
+					}
+				})
+				return false;
+			});
+			
+			//删除
+			$("table").on("click",".del",function(){
+				if(confirm("确认要删除该信息？")){
+					var id =$(this).parent().parent().attr("data-id");
+					var url = "${ctx}/pc/lottery/delete?id=" + id;
+					$.getJSON(url,function(d){
+						if(d &&d.success){
+							$(".queryForm").submit();
+						}
+					})
+				}
+				
+			}).on("click",".info",function(){
+				//详细
+				var id =$(this).parent().parent().attr("data-id");
+				var url= "${ctx}/pc/lottery/view?id=" + id;
+				window.open(url);
+			});
+			
+			$(".modal-footer .btn-default").click(function(){
+				//关闭按钮时，重置表单
+				$(this).parent().parent().find("input[type='reset']").trigger("click");
+			});
+			
+			$(".tjButton").click(function(){
+				//统计
+				var url = "${ctx}/pc/lottery/tj";
+				$.getJSON(url,function(d){
+					if(d){
+						$(".csctj").html(d.csctj);	
+						$(".mtctj").html(d.mtctj);	
+						$(".ztj").html(d.ztj);	
+					}
+				});
+			});
+		});
+	
+	</script>
+</body>
+</html>

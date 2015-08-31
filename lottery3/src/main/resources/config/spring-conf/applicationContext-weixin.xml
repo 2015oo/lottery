@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:compass="http://www.compass-project.org/schema/spring-core-config"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+         http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx.xsd
+	 	 http://www.compass-project.org/schema/spring-core-config http://www.compass-project.org/schema/spring-compass-core-config-2.2.xsd"
+	xmlns:p="http://www.springframework.org/schema/p">
+
+	<bean id="tokenClusterRedis" class="com.fastweixin.util.TokenClusterRedis">
+		<property name="redisManager" ref="redisManager"></property>
+	</bean>
+	
+	
+	<bean id="weixinApiConfig" class="com.fastweixin.api.config.ApiConfig"
+		scope="singleton">
+		<constructor-arg index="0" value="${ooweixin.appid}" />
+		<constructor-arg index="1" value="${ooweixin.secret}" />
+		<constructor-arg index="2" value="${ooweixin.token}" />
+		<constructor-arg index="3" value="${ooweixin.enableJsApi}" />
+		<constructor-arg index="4" ref="tokenClusterRedis">
+		</constructor-arg>
+	</bean>
+
+	<bean id="payApiConfig" class="com.fastweixin.api.config.PayApiConfig"
+		scope="singleton">
+		<constructor-arg index="0" value="${ooweixin.mchid}" />
+		<constructor-arg index="1" value="${ooweixin.paykey}" />
+		<constructor-arg index="2" value="${ooweixin.domainname}" />
+		<constructor-arg index="3" value="${ooweixin.notifyurl}" />
+		<constructor-arg index="4" value="${ooweixin.paydebug}" />
+
+		<property name="sslCertPath" value="${ooweixin.sslCertPath}"></property>
+	</bean>
+
+	<bean id="weixinConfig" class="cn.oomall.function.weixin.config.OOWeixinConfig"
+		scope="singleton">
+		<constructor-arg index="0" value="${ooweixin.interfaceURI}" />
+		<constructor-arg index="1" value="${ooweixin.imageServerURL}" />
+		<constructor-arg index="2" value="${ooweixin.ovcmServerURI}" />
+		<constructor-arg index="3" value="${ooweixin.qrcodeLogPath}" />
+		<constructor-arg index="4" value="${ooweixin.controllerURI}" />
+	</bean>
+
+</beans>
