@@ -112,14 +112,14 @@ public class LotterryService {
 		Object summoney = mtctj.get("MONEY");
 		result.put("mtctj", String.format(strForm, String.valueOf(c),String.valueOf(summoney)));
 		
-		//统计彩上彩
+		//统计彩中彩
 		type = "1";
 		mtctj = this.dao.tj(type);
 		c = mtctj.get("C");
 		summoney = mtctj.get("MONEY");
 		result.put("csctj", String.format(strForm, String.valueOf(c),String.valueOf(summoney)));
 		//总统计
-		//统计彩上彩
+		//统计彩中彩
 		type = "";
 		mtctj = this.dao.tj(type);
 		c = mtctj.get("C");

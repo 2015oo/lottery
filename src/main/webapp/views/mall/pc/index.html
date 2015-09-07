@@ -6,11 +6,16 @@
 <script type="text/javascript"
 	src="${ctx}/statics/jquery/jquery-1.9.1.js"></script>
 <script type="text/javascript"
+	src="${ctx}/statics/jquery/jquery-migrate-1.1.1.js"></script>
+	
+<script type="text/javascript"
 	src="${ctx}/statics/jquery/jquery.form.js"></script>
 <script type="text/javascript"
 	src="${ctx}/statics/jquery/jquery.tmpl.js"></script>
 <script type="text/javascript"
 	src="${ctx}/statics/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+<script type="text/javascript"
+ 	src="${ctx}/statics/jquery/jquery.jmp3.js"></script> 
 
 <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon" /> 
 <!-- 新 Bootstrap 核心 CSS 文件 -->
@@ -24,40 +29,63 @@
 <script type="text/javascript">
 	
 </script>
-<body>
+<body style="background-color: #87CEFA">
 	<div style="width: 900px; height: 600px;" class="container">
-		<div class="page-header" >
-			<img alt="" style="width: 200px;float: left;" height="auto" src="${ctx}/statics/image/cp-title.jpg" >
-			<h1>武安市中福在线加奖管理系统</h1>
+		<div class="panel panel-default" >
+			<img alt="" style="width: 150px;float: left;margin-top: 4px" height="auto" src="${ctx}/statics/image/cp-title2.png" >
+		</div>
+		<div class="page-header" style="text-align: center;">
+			<h1>
+			<font color="red" style="font-weight: bold;font-size: 49px;">
+			武安市中福在线加奖管理系统
+			</font>
+			</h1>
 		</div>
 	
+	
+<!-- 	
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="25" height="20"
+    codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
+    <param name="movie" value="${ctx}/statics/mp3/singlemp3player.swf?file=sound2.mp3&backColor=990000&frontColor=ddddff&repeatPlay=true&songVolume=30" />
+    <param name="wmode" value="transparent" />
+    <embed wmode="transparent" width="25" height="20" src="${ctx}/statics/mp3/singlemp3player.swf?file=${ctx}/statics/mp3/4031.mp3&backColor=990000&frontColor=ddddff&repeatPlay=true&songVolume=30"
+    type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+</object>
+            
+-->
+
 		<div class="panel panel-default">
 			<div class="panel-heading">查询框</div>
 			<div class="panel-body">
 				
 				<form class="navbar-form navbar-left queryForm" role="search" action="${ctx}/pc/lottery/query" >
 				  <div class="form-group">
-					  <input type="text" class="form-control" name="cdCode" placeholder="传单号">
-				  </div>
-				  <div class="form-group">
 				    <input type="text" class="form-control" name="name"placeholder="姓名">
 				  </div>
 				  <div class="form-group">
 				    <input type="text" class="form-control" name="code" placeholder="身份证号">
+				  </div>
+				  <div class="form-group">
+					  <input type="text" class="form-control" name="cdCode" placeholder="传单号">
 				  </div>
 				  <button type="submit" class="btn btn-default">
 				 	<span class="glyphicon glyphicon-search"></span> 查询
 				  </button>
 				  <br/>
 				  <br/>
-					&nbsp;&nbsp; <span class="btn btn-default" data-toggle="modal"
-						data-target="#myModal">彩上彩</span> &nbsp;&nbsp;
-					<span class="btn btn-default" data-toggle="modal"
+					&nbsp;&nbsp; <span class="btn btn-default" style="font-size: 30px;font-weight: bolder;" data-toggle="modal"
+						data-target="#myModal">彩中彩</span> &nbsp;&nbsp;
+					<span class="btn btn-default" data-toggle="modal" style="font-size: 30px;font-weight: bolder;"
 						data-target="#myModal2">满堂彩</span> &nbsp;&nbsp;
-					<span class="btn btn-default tjButton" data-toggle="modal"
+					<span class="btn btn-default tjButton" data-toggle="modal" style="font-size: 30px;font-weight: bolder;"
 						data-target="#myModal3">统计</span> &nbsp;&nbsp;
 				</form>
 			</div>
+		</div>
+		
+		<div class="alert alert-success alert-dismissible" role="alert" style="display: none;">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <strong>提示!</strong> <span id="alertMsgSpan"></span>
 		</div>
 
 		<div class="panel panel-default listClass">
@@ -88,7 +116,7 @@
 					<td>${money}</td>
 					<td>
 						{{if type=='1'}}
-						<font color="red">彩上彩</font>
+						<font color="red">彩中彩</font>
 						{{else}}<font color="green">满堂彩</font>{{/if}}
 					</td>
 					<td>${cdCode}</td>
@@ -107,15 +135,25 @@
 
 	<!-- Modal -->
 	<!-- 模态框（Modal） -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
-					<h4 class="modal-title" id="myModalLabel">添加 彩上彩</h4>
+					<h4 class="modal-title" id="myModalLabel">添加 彩中彩</h4>
 				</div>
+				
+				<div class="alert alert-danger alert-dismissible" role="alert" style="display: none;">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong>警告!</strong> 
+					<span id="jgContent"></span>
+				</div>
+				
 				<div class="modal-body">
 					<form action="${ctx}/pc/lottery/save">
 						<input type="hidden" value="1" name="type">
@@ -125,7 +163,7 @@
 						      <span class="input-group-addon">
 						      		姓名
 						      </span>
-						      <input type="text" class="form-control" name="name" maxlength="30" aria-label="...">
+						      <input type="text" class="form-control" name="name" maxlength="10" aria-label="...">
 						    </div><!-- /input-group -->
 						  </div><!-- /.col-lg-6 -->
 						  <div class="col-lg-6">
@@ -176,7 +214,7 @@
 						      <span class="input-group-addon">
 						      	备注
 						      </span>
-						      <input type="text" class="form-control" name="bz" aria-label="...">
+						      <input type="text" class="form-control" name="bz" maxlength="30" aria-label="...">
 						    </div><!-- /input-group -->
 						  </div><!-- /.col-lg-6 -->
 						</div>		
@@ -199,7 +237,7 @@
 	
 	<!-- Modal -->
 	<!-- 模态框（Modal）满堂彩 -->
-	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" data-backdrop="static"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -208,6 +246,15 @@
 						aria-hidden="true">×</button>
 					<h4 class="modal-title" id="myModalLabel">添加 满堂彩</h4>
 				</div>
+				<div class="alert alert-danger alert-dismissible" role="alert" style="display: none;">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong>警告!</strong> 
+					<span id="jgContent"></span>
+				</div>
+				
 				<div class="modal-body">
 					<form action="${ctx}/pc/lottery/save">
 						<input type="hidden" value="2" name="type">
@@ -217,7 +264,7 @@
 						      <span class="input-group-addon">
 						      		姓名
 						      </span>
-						      <input type="text" class="form-control" name="name" aria-label="..." maxlength="30">
+						      <input type="text" class="form-control" name="name" aria-label="..." maxlength="10">
 						    </div><!-- /input-group -->
 						  </div><!-- /.col-lg-6 -->
 						  <div class="col-lg-6">
@@ -268,7 +315,7 @@
 						      <span class="input-group-addon">
 						      	备注
 						      </span>
-						      <input type="text" class="form-control" name="bz" aria-label="..." >
+						      <input type="text" class="form-control" name="bz" maxlength="30" aria-label="..." >
 						    </div><!-- /input-group -->
 						  </div><!-- /.col-lg-6 -->
 						</div>		
@@ -290,7 +337,7 @@
 	
 	<!-- Modal -->
 	<!-- 模态框（Modal）统计 -->
-	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog"
+	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" 
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -303,7 +350,7 @@
 					
 					<ul class="list-group">
 					  <li class="list-group-item list-group-item-success">
-						      		彩上彩统计：
+						      		彩中彩统计：
 						      <span class="csctj">人数：118，金额：234.1</span>
 					  </li>
 					  <li class="list-group-item list-group-item-info">
@@ -322,10 +369,16 @@
 				</div>
 			</div>
 			<!-- /.modal-content -->
+			
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
+	
+<div style="">
+	<span id="mp3Span"></span>
+</div>
+	
 	
 	
 	<script type="text/javascript">
@@ -335,18 +388,21 @@
 			var name = _form.find("input[name='name']").val();
 			if(name==''){
 				alert("姓名必填")
+				_form.find("input[name='name']").focus();
 				return false;
 			}
 			//身份证号
 			var code= _form.find("input[name='code']").val();
 			if(code==''){
 				alert("身份证号")
+				_form.find("input[name='code']").focus();
 				return false;
 			}
 			//嘉奖金额
 			var money= _form.find("input[name='money']").val();
 			if(money==''){
 				alert("加奖金额必填")
+				_form.find("input[name='money']").focus();
 				return false;
 			}
 			if(!reg.test(money)){  
@@ -357,6 +413,18 @@
 		}
 	
 		$(function(){
+			$(".modal").on("hide.bs.modal",function(){
+				$(".alert").hide();
+				$("#mp3Span").empty();
+			});
+			
+			$('#myModal2').on('shown.bs.modal', function () {
+				$("#myModal2").find("input[name='name']").focus();
+			})
+			$('#myModal').on('shown.bs.modal', function () {
+				$("#myModal").find("input[name='name']").focus();
+			})
+			
 				$(".modal form").submit(function(){  
 					var _form = $(this);
 					if(checkData(_form)==false){
@@ -364,6 +432,9 @@
 					}
 					var code = $(this).find("input[name='code']").val();
 					var cdCode = $(this).find("input[name='cdCode']").val();
+					var name = $(this).find("input[name='name']").val();
+					var alertDanger = $(this).closest(".modal").find(".alert-danger")
+					debugger;
 			            $(this).ajaxSubmit({  
 			                type:"post",  //提交方式  
 			                dataType:"json", //数据类型  
@@ -375,30 +446,39 @@
 			                		//保存成功，让列表刷新
 			                		$(".queryForm").find("input[name='code']").val(code);
 			                		$(".queryForm").submit();
+			                		$("#alertMsgSpan").html("姓名:" + name + "，身份证:"+code + " 添加成功！！！")
 			                		_form[0].reset();
+			                		_form.parent().parent().find(".close").trigger("click");
+			                		$(".alert-success").slideDown();
 			                	}else{
 			                		if(data.msg=='2'){
-			                			alert("不在活动时间范围内")
+			                			alertDanger.find("#jgContent").html("不在活动时间范围内")
+				                		alertDanger.slideDown();
 			                		}else if(data.msg=='3'){
 				                		$(".queryForm").find("input[name='cdCode']").val(cdCode);
 				                		$(".queryForm").submit();
-			                			alert("该传单号已经使用");
+			                			alertDanger.find("#jgContent").html("该传单号已经使用")
+				                		alertDanger.slideDown();
+			                			addMp3();
 			                		}else if(data.msg=='4'){
-			                			alert("该身份证号码已经用过三次了");
 				                		$(".queryForm").find("input[name='code']").val(code);
 				                		$(".queryForm").submit();
+			                			alertDanger.find("#jgContent").html("该身份证号码已经用过三次了")
+				                		alertDanger.slideDown();
+ 			                			addMp3();
 			                		}else if(data.msg=='5'){
-			                			alert("该身份证号码当天只可以用一次");
 				                		$(".queryForm").find("input[name='code']").val(code);
 				                		$(".queryForm").submit();
+			                			alertDanger.find("#jgContent").html("该身份证号码当天只可以用一次")
+				                		alertDanger.slideDown();
+			                			addMp3();
 			                		}
 			                	}
-		                		_form.parent().parent().find(".close").trigger("click");
 			                }  
 			            });  
 			            return false; //不刷新页面  
 			        });  
-			//彩上彩保存
+			//彩中彩保存
 			$("#myModal").find(".btn-primary").click(function(){
 				$("#myModal form").submit();
 			});
@@ -456,8 +536,29 @@
 					}
 				});
 			});
+			
+			$(".alert-danger .close").click(function(){
+				$("#mp3Span").empty();
+				$(this).closest(".alert").slideUp();
+			});
 		});
-	
+		
+		function addMp3(){
+// 			setTimeout(function(){
+// 				$("#mp3Span").empty();
+// 			},1500)
+			$("#mp3Span").jmp3({
+				"backcolor": "",									// background color
+				"forecolor": "ffffff",
+				repeat:true,
+				width: 10,
+// 				showdownload: "true",
+				autoplay: "true",	
+				filepath:"${ctx}/statics/mp3/4031.mp3",
+				playerpath:"${ctx}/statics/mp3/"
+			});
+		}
+		
 	</script>
 </body>
 </html>

@@ -21,18 +21,24 @@
 	href="${ctx}/statics/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
 </head>
 </head>
-<body>
+<body  style="background-color: #87CEFA">
 	<div style="width: 800px; height: 600px;" class="container">
-	<div class="page-header" >
-			<img alt="" style="width: 200px;float: left;" height="auto" src="${ctx}/statics/image/cp-title.jpg" >
-			<h1>武安市中福在线加奖管理系统</h1>
+	<div class="panel panel-default" >
+			<img alt="" style="width: 150px;float: left;margin-top: 4px" height="auto" src="${ctx}/statics/image/cp-title2.png" >
+		</div>
+		<div class="page-header" style="text-align: center;">
+			<h1>
+			<font color="red" style="font-weight: bold;font-size: 49px;">
+			武安市中福在线加奖管理系统
+			</font>
+			</h1>
 		</div>
 	
 	
 		<div class="panel panel-default">
 			<div class="panel-heading">
 			#if ($lottery.type=='1')
-										彩上彩 
+										彩中彩 
 										#else 
 										满堂彩 
 										#end</div>
